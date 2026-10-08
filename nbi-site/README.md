@@ -15,23 +15,27 @@ npm run preview    # preview the built site
 
 The CMS lives at `/admin`. In production it's gated by Netlify Identity —
 only invited email addresses can log in. Locally, use `npx decap-server`
-in a separate terminal to run the CMS against the filesystem.
+in a separate terminal.
 
 ## Editing content
 
-Content lives in `src/content/`. The owner never edits these directly —
-they use `/admin`. You should too, unless you're doing bulk changes.
+Content lives in `src/content/` and `src/data/`. The owner uses `/admin`.
 
 - Business info: `src/data/settings.json`
 - Services: `src/content/services/*.md`
-- Gallery: `src/content/gallery/*.md`
+- Before & after pairs: `src/content/beforeafter/*.md`
+- Gallery photos: `src/content/gallery/*.md`
 - Reviews: `src/content/reviews/*.md`
 - FAQ: `src/content/faq/*.md`
 
 ## Adding a field
 
-1. Add it to the relevant collection in `src/content.config.ts`
+1. Add it to the collection in `src/content.config.ts`
 2. Add the matching field in `public/admin/config.yml`
 3. Use it in the component
 
 Both files must agree or the build will fail.
+
+## Deploy
+
+Push to `main` on GitHub. Netlify builds and deploys automatically.
