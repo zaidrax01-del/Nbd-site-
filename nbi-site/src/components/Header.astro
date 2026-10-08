@@ -3,10 +3,12 @@ import settings from '../data/settings.json';
 
 const links = [
   { href: '#services', label: 'Services' },
-  { href: '#gallery', label: 'Gallery' },
+  { href: '#gallery', label: 'Before & After' },
+  { href: '#photos', label: 'Gallery' },
   { href: '#pricing', label: 'Pricing' },
   { href: '#about', label: 'About' },
   { href: '#reviews', label: 'Reviews' },
+  { href: '#hours', label: 'Hours' },
   { href: '#area', label: 'Service Area' },
   { href: '#faq', label: 'FAQ' },
 ];
@@ -44,7 +46,6 @@ const links = [
     }
   });
 
-  // Active nav link on scroll
   const links = Array.from(nav?.querySelectorAll('a[href^="#"]') ?? []);
   const targets = links
     .map((a) => document.querySelector(a.getAttribute('href')!))
