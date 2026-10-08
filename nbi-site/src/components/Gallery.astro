@@ -4,44 +4,23 @@ import { getCollection } from 'astro:content';
 const photos = (await getCollection('gallery')).sort(
   (a, b) => a.data.weight - b.data.weight
 );
-const featured = photos.find((p) => p.data.featured) ?? photos[0];
-const rest = photos.filter((p) => p !== featured);
 ---
 
-<section id="gallery">
-  <div class="wrap sec">
-    <div class="lab">Real Results</div>
-    <h2 class="serif">Before &amp; After</h2>
-    <p class="sub">Drag the slider, then scroll the gallery. Every photo below is our own work.</p>
+{photos.length > 0 && (
+  <section id="photos">
+    <div class="wrap sec">
+      <div class="lab">Gallery</div>
+      <h2 class="serif">More of Our Work</h2>
+      <p class="sub">Interiors, wheels, paint, engine bays — the details matter.</p>
 
-    <div class="ba">
-      <div class="slider" id="sl">
-        <div class="after" style={featured?.data.image ? `background-image:url(${featured.data.image})` : ''}></div>
-        <div class="before" style={featured?.data.image ? `background-image:url(${featured.data.image})` : ''}></div>
-        <span class="tag" style="left:10px">Before</span>
-        <span class="tag" style="right:10px">After</span>
-        <div class="bar"><i aria-hidden="true">◂▸</i></div>
-        <input type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after" id="rng">
+      <div class="gal">
+        {photos.map((p) => (
+          <figure class={`shot${p.data.featured ? ' featured' : ''}`}>
+            <img src={p.data.image} alt={p.data.caption} loading="lazy" decoding="async">
+            <figcaption>{p.data.caption}</figcaption>
+          </figure>
+        ))}
       </div>
     </div>
-
-    <div class="gal">
-      {rest.map((p) => (
-        <figure class={`shot${p.data.featured ? ' featured' : ''}`}>
-          <img src={p.data.image} alt={p.data.caption} loading="lazy" decoding="async">
-          <figcaption>{p.data.caption}</figcaption>
-        </figure>
-      ))}
-    </div>
-  </div>
-</section>
-
-<script>
-  const sl = document.getElementById('sl');
-  const rng = document.getElementById('rng') as HTMLInputElement | null;
-  const setPos = () => {
-    if (sl && rng) sl.style.setProperty('--pos', rng.value + '%');
-  };
-  rng?.addEventListener('input', setPos);
-  setPos();
-</script>
+  </section>
+)}
