@@ -1,1 +1,113 @@
+---
+import { getCollection } from 'astro:content';
 
+const pairs = (await getCollection('beforeafter')).sort(
+  (a, b) => a.data.weight - b.data.weight
+);
+
+let featuredIndex = pairs.findIndex((p) => p.data.featured);
+if (featuredIndex < 0) featuredIndex = 0;
+const active = pairs[featuredIndex];
+---
+
+{pairs.length > 0 && active && (
+  <section id="gallery">
+    <div class="wrap sec">
+      <div class="lab">Real Results</div>
+      <h2 class="serif">Before &amp; After</h2>
+      <p class="sub">Drag the slider to compare. Every photo below is our own work.</p>
+
+      <div class="slider" id="sl">
+        <div
+          class="after"
+          id="afterImg"
+          style={`background-image:url(${active.data.afterImage})`}
+          role="img"
+          aria-label={`After: ${active.data.caption}`}
+        ></div>
+        <div
+          class="before"
+          id="beforeImg"
+          style={`background-image:url(${active.data.beforeImage})`}
+          role="img"
+          aria-label={`Before: ${active.data.caption}`}
+        ></div>
+        <span class="tag" style="left:10px">Before</span>
+        <span class="tag" style="right:10px">After</span>
+        <div class="bar"><i aria-hidden="true">◂▸</i></div>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value="50"
+          aria-label="Drag to compare before and after"
+          id="rng"
+        >
+      </div>
+
+      <p class="ba-caption" id="baCaption">
+        {active.data.caption}
+        {active.data.vehicle && <span class="ba-vehicle"> · {active.data.vehicle}</span>}
+      </p>
+
+      {pairs.length > 1 && (
+        <div class="ba-thumbs" role="tablist" aria-label="Choose a before and after pair">
+          {pairs.map((p, i) => (
+            <button
+              type="button"
+              class={`ba-thumb${i === featuredIndex ? ' on' : ''}`}
+              role="tab"
+              aria-selected={i === featuredIndex ? 'true' : 'false'}
+              data-before={p.data.beforeImage}
+              data-after={p.data.afterImage}
+              data-caption={p.data.caption}
+              data-vehicle={p.data.vehicle ?? ''}
+            >
+              <img src={p.data.afterImage} alt="" loading="lazy" decoding="async">
+              <span>{p.data.caption}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+<script>
+  const sl = document.getElementById('sl');
+  const rng = document.getElementById('rng') as HTMLInputElement | null;
+  const beforeImg = document.getElementById('beforeImg');
+  const afterImg = document.getElementById('afterImg');
+  const caption = document.getElementById('baCaption');
+
+  const setPos = () => {
+    if (sl && rng) sl.style.setProperty('--pos', rng.value + '%');
+  };
+  rng?.addEventListener('input', setPos);
+  setPos();
+
+  const thumbs = document.querySelectorAll<HTMLButtonElement>('.ba-thumb');
+  thumbs.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (!beforeImg || !afterImg || !caption) return;
+
+      beforeImg.style.backgroundImage = `url(${btn.dataset.before})`;
+      afterImg.style.backgroundImage = `url(${btn.dataset.after})`;
+
+      const vehicle = btn.dataset.vehicle;
+      caption.innerHTML =
+        (btn.dataset.caption ?? '') +
+        (vehicle ? ` <span class="ba-vehicle"> · ${vehicle}</span>` : '');
+
+      thumbs.forEach((t) => {
+        t.classList.toggle('on', t === btn);
+        t.setAttribute('aria-selected', String(t === btn));
+      });
+
+      if (rng) {
+        rng.value = '50';
+        setPos();
+      }
+    });
+  });
+</script>
