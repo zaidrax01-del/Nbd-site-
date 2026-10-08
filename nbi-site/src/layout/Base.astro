@@ -1,0 +1,87 @@
+---
+import '../styles/global.css';
+import settings from '../data/settings.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${settings.fullName} | Mobile Car Detailing in Reno & Sparks`,
+  description = settings.heroDescription,
+} = Astro.props;
+
+const socials = Object.values(settings.socials).filter(Boolean);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AutoDetailing',
+  name: `${settings.businessName} – ${settings.fullName}`,
+  description: settings.shortDescription,
+  url: Astro.site?.toString() ?? 'https://nbd-detail.com',
+  telephone: settings.phone,
+  email: settings.email,
+  priceRange: '$$',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Reno',
+    addressRegion: 'NV',
+    addressCountry: 'US',
+  },
+  areaServed: settings.areas.map((name) => ({ '@type': 'City', name })),
+  openingHoursSpecification: settings.hours
+    .filter((h) => !h.closed)
+    .map((h) => ({
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: h.label,
+      description: h.value,
+    })),
+  sameAs: socials,
+};
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <meta name="theme-color" content="#050507">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="canonical" href={Astro.url}>
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:image" content="/og.jpg">
+  <meta property="og:url" content={Astro.url}>
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet"
+  >
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ff3df0"/>
+        <stop offset="1" stop-color="#b312a0"/>
+      </linearGradient>
+      <symbol id="crown" viewBox="0 0 60 50">
+        <path d="M4 12l14 12L30 4l12 20L56 12l-6 28H10z" fill="url(#g)"/>
+        <rect x="12" y="43" width="36" height="5" rx="2" fill="url(#g)"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <slot />
+
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</body>
+</html>
