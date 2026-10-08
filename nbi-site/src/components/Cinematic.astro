@@ -209,9 +209,9 @@
     });
   }
 
-  /* ---------- 7. SCROLL FX: progress bar, hero parallax, velocity skew ---------- */
+  /* ---------- 7. SCROLL FX: progress bar + hero parallax ---------- */
   var prog = document.getElementById('prog'), hero = document.getElementById('home');
-  var secs = $$('section'), lastY = window.scrollY, sv = 0, docH = 1;
+  var lastY = window.scrollY, sv = 0, docH = 1;
   var measure = function(){ docH = Math.max(1, html.scrollHeight - window.innerHeight); };
   measure();
   window.addEventListener('resize', measure);
@@ -223,10 +223,6 @@
     if(hero){
       var p = clamp(y/Math.max(1, hero.offsetHeight), 0, 1);
       NBD.p = p; hero.style.setProperty('--p', p.toFixed(3));
-    }
-    if(!reduce){
-      var k = clamp(sv*.045, -1.1, 1.1), on = Math.abs(k) > .02;
-      secs.forEach(function(s){ s.style.transform = on ? 'skewY('+k.toFixed(3)+'deg)' : ''; });
     }
     requestAnimationFrame(tick);
   })();
