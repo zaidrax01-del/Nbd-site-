@@ -1,1 +1,66 @@
+---
+import settings from '../data/settings.json';
 
+const links = [
+  { href: '#services', label: 'Services' },
+  { href: '#gallery', label: 'Gallery' },
+  { href: '#pricing', label: 'Pricing' },
+  { href: '#about', label: 'About' },
+  { href: '#reviews', label: 'Reviews' },
+  { href: '#area', label: 'Service Area' },
+  { href: '#faq', label: 'FAQ' },
+];
+---
+
+<header>
+  <div class="wrap nav">
+    <a href="#home" class="logo">
+      <svg aria-hidden="true"><use href="#crown"/></svg>{settings.businessName}
+    </a>
+    <nav id="nav" aria-label="Main">
+      <ul>
+        {links.map((l, i) => (
+          <li><a class={i === 0 ? 'on' : ''} href={l.href}>{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <a class="btn fill nav-cta" href="#book">📅 Book Now</a>
+    <button class="menu" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="nav">☰</button>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('menuBtn');
+  const nav = document.getElementById('nav');
+  btn?.addEventListener('click', () => {
+    const open = nav?.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(!!open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  });
+  nav?.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).tagName === 'A') {
+      nav.classList.remove('open');
+      btn?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Active nav link on scroll
+  const links = Array.from(nav?.querySelectorAll('a[href^="#"]') ?? []);
+  const targets = links
+    .map((a) => document.querySelector(a.getAttribute('href')!))
+    .filter(Boolean) as Element[];
+  if ('IntersectionObserver' in window && targets.length) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (!en.isIntersecting) return;
+          links.forEach((a) => {
+            a.classList.toggle('on', a.getAttribute('href') === '#' + en.target.id);
+          });
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+    targets.forEach((t) => io.observe(t));
+  }
+</script>
