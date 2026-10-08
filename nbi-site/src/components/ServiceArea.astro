@@ -1,1 +1,27 @@
+---
+import settings from '../data/settings.json';
+---
 
+<section id="area">
+  <div class="wrap sec split">
+    <div>
+      <div class="lab">Service Area</div>
+      <h2 class="serif">We Come To You</h2>
+      <p class="sub">
+        Mobile detailing across Northern Nevada. If you're just outside the list, ask — we
+        may still be able to fit you in.
+      </p>
+      <ul class="area-list">
+        {settings.areas.map((a) => (
+          <li><i class="ic" aria-hidden="true">📍</i>{a}</li>
+        ))}
+      </ul>
+      <p style="margin-top:18px">
+        <a class="pk" href="#book" style="font-size:13px">Check if we service your area →</a>
+      </p>
+    </div>
+    <div>
+      <div class="map" role="img" aria-label="Stylised map of the service area"></div>
+    </div>
+  </div>
+</section>
