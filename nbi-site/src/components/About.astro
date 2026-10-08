@@ -1,1 +1,36 @@
+---
+import settings from '../data/settings.json';
 
+const points = [
+  { icon: '📍', title: 'Convenience', body: 'We come to you — home or office, on your schedule.' },
+  { icon: '✦', title: 'Attention to Detail', body: 'Door jambs, vents, seams. The stuff other shops skip.' },
+  { icon: '🧴', title: 'Premium Products', body: 'pH-neutral soaps, safe wheel cleaners, quality sealants.' },
+  { icon: '👥', title: 'Customer Focused', body: 'Upfront pricing, honest quotes, satisfaction guaranteed.' },
+];
+---
+
+<section id="about">
+  <div class="wrap sec split">
+    <div>
+      <div class="lab">About {settings.businessName}</div>
+      <h2 class="serif">{settings.fullName}</h2>
+      <div class="prose">
+        {settings.aboutParagraphs.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+
+    <div>
+      <div class="lab">Why Choose {settings.businessName}?</div>
+      <h2 style="font-size:20px">We go the extra mile</h2>
+      <div class="why">
+        {points.map((pt) => (
+          <div>
+            <i class="ic" aria-hidden="true">{pt.icon}</i>
+            <b>{pt.title}</b>
+            <small>{pt.body}</small>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
