@@ -1,1 +1,65 @@
+---
+import settings from '../data/settings.json';
 
+const year = new Date().getFullYear();
+const { instagram, tiktok, facebook, google } = settings.socials;
+---
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#home" class="logo" style="font-size:20px">
+          <svg style="width:32px;height:28px" aria-hidden="true"><use href="#crown"/></svg>
+          {settings.businessName}
+        </a>
+        <p>{settings.shortDescription}</p>
+        <div class="soc" style="margin-top:16px">
+          {instagram && <a href={instagram} target="_blank" rel="noopener" aria-label="Instagram">◎</a>}
+          {tiktok && <a href={tiktok} target="_blank" rel="noopener" aria-label="TikTok">♪</a>}
+          {facebook && <a href={facebook} target="_blank" rel="noopener" aria-label="Facebook">f</a>}
+          {google && <a href={google} target="_blank" rel="noopener" aria-label="Google Business">G</a>}
+        </div>
+      </div>
+
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href={`tel:${settings.phone}`}>📞 {settings.phoneDisplay}</a></li>
+          <li><a href={`mailto:${settings.email}`}>✉️ {settings.email}</a></li>
+          {settings.bookingUrl && <li><a href={settings.bookingUrl}>📅 Book Online</a></li>}
+        </ul>
+        <h4 style="margin-top:22px">Hours</h4>
+        <ul style="color:var(--mut)">
+          {settings.hours.map((h) => (
+            <li>{h.label} · {h.value}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h4>Service Area</h4>
+        <ul style="color:var(--mut)">
+          {settings.areas.slice(0, 5).map((a) => <li>{a}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bot">
+      <span>© {year} {settings.businessName} – {settings.fullName}. All rights reserved.</span>
+      <span>{settings.areas.slice(0, 3).join(' · ')}, NV</span>
+    </div>
+  </div>
+</footer>
