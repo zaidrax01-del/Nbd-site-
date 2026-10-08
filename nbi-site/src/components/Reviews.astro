@@ -1,51 +1,37 @@
 ---
-import { getCollection } from 'astro:content';
-import settings from '../data/settings.json';
+import { getCollection, render } from 'astro:content';
 
 const reviews = (await getCollection('reviews')).sort(
   (a, b) => a.data.weight - b.data.weight
 );
+
+const rendered = await Promise.all(
+  reviews.map(async (r) => ({
+    data: r.data,
+    Content: (await render(r)).Content,
+  }))
+);
 ---
 
 <section id="reviews">
-  <div class="wrap sec split">
-    <div>
-      <div class="lab">Reviews</div>
-      <h2 class="serif">What Our Customers Say</h2>
-      <p class="sub">Real people. Real results.</p>
+  <div class="wrap sec">
+    <div class="lab">Reviews</div>
+    <h2 class="serif">What Our Customers Say</h2>
+    <p class="sub">Real people. Real results.</p>
 
-      <div class="rev-list">
-        {reviews.map((r) => (
-          <div class="rev">
-            <div class="av" aria-hidden="true"></div>
-            <div>
-              <div class="stars" aria-label={`Rated ${r.data.rating} out of 5`}>
-                {'★'.repeat(r.data.rating)}
-              </div>
-              <p><slot />{r.body}</p>
-              <small>— {r.data.name}, {r.data.location}</small>
+    <div class="rev-list">
+      {rendered.map((r) => (
+        <div class="rev">
+          <div class="av" aria-hidden="true"></div>
+          <div>
+            <div class="stars" aria-label={`Rated ${r.data.rating} out of 5`}>
+              {'★'.repeat(r.data.rating)}
             </div>
+            <div class="rev-body"><r.Content /></div>
+            <small>— {r.data.name}, {r.data.location}</small>
           </div>
-        ))}
-      </div>
-    </div>
-
-    <div>
-      <div class="lab">Hours</div>
-      <h2 style="font-size:20px">When We Work</h2>
-      <p class="sub">Mobile appointments, 7 days a week by request.</p>
-      <ul class="hours">
-        {settings.hours.map((h) => (
-          <li>
-            <span>{h.label}</span>
-            <span class={h.closed ? 'closed' : ''}>{h.value}</span>
-          </li>
-        ))}
-      </ul>
-      <p class="note">
-        Last appointment starts 2 hours before close. Weather-dependent — we'll reschedule
-        free if it rains.
-      </p>
+        </div>
+      ))}
     </div>
   </div>
 </section>
