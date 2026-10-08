@@ -1,1 +1,23 @@
+---
+import settings from '../data/settings.json';
+---
 
+<section id="book">
+  <div class="banner">
+    <div class="lab">Book Your Detail</div>
+    <h2>Ready for a cleaner, fresher ride?</h2>
+    <p class="sub" style="margin:0 auto 26px">
+      Pick a time that works for you. We'll confirm by text within a few hours.
+    </p>
+    <div class="cta">
+      {settings.bookingUrl && (
+        <a class="btn fill" href={settings.bookingUrl} target="_blank" rel="noopener">
+          📅 Book Online
+        </a>
+      )}
+      <a class="btn out" href={`tel:${settings.phone}`}>📞 {settings.phoneDisplay}</a>
+      <a class="btn out" href={`mailto:${settings.email}`}>✉️ Email Us</a>
+    </div>
+    <p class="pk" style="font-size:12px;margin:18px 0 0">✓ Fast. Easy. Convenient.</p>
+  </div>
+</section>
