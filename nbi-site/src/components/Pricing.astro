@@ -1,14 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
-import settings from '../data/settings.json';
 
 const main = (await getCollection('services'))
   .filter((s) => s.data.category === 'main')
   .sort((a, b) => a.data.weight - b.data.weight);
 
-// Top three become plan cards, rest go in the table on Services
 const plans = main.slice(0, 3);
-const popular = 1; // index of the "Most Popular" plan
+const popular = 1;
 ---
 
 <section id="pricing">
