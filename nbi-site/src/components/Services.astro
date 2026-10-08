@@ -1,13 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
 
-const services = (await getCollection('services'))
-  .filter((s) => s.data.category === 'main')
-  .sort((a, b) => a.data.weight - b.data.weight);
-
-const featured = services.filter((s) => s.data.featured);
-const all = (await getCollection('services')).sort((a, b) => a.data.weight - b.data.weight);
+const all = (await getCollection('services')).sort(
+  (a, b) => a.data.weight - b.data.weight
+);
+const main = all.filter((s) => s.data.category === 'main');
 const addons = all.filter((s) => s.data.category === 'addon');
+const featured = main.filter((s) => s.data.featured);
 ---
 
 <section id="services">
@@ -44,7 +43,7 @@ const addons = all.filter((s) => s.data.category === 'addon');
             </tr>
           </thead>
           <tbody>
-            {services.map((s) => (
+            {main.map((s) => (
               <tr>
                 <td>{s.data.title}</td>
                 <td><small>{s.data.description}</small></td>
