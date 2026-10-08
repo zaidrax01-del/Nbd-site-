@@ -1,1 +1,30 @@
+---
+import settings from '../data/settings.json';
+---
 
+<div class="hero" id="home">
+  <div class="car" aria-hidden="true"></div>
+  <div class="inner">
+    <div class="badge" aria-hidden="true">
+      <svg viewBox="0 0 60 50"><use href="#crown"/></svg>
+      <b>{settings.businessName}</b>
+      <small>{settings.fullName}</small>
+    </div>
+    <div>
+      <div class="eyebrow">MOBILE CAR DETAILING · RENO &amp; SPARKS</div>
+      <h1 class="serif">
+        Premium Car Detailing.<br><span class="pk">We Come To You.</span>
+      </h1>
+      <p>{settings.heroDescription}</p>
+      <div class="cta">
+        <a class="btn fill" href="#book">📅 Book Now</a>
+        <a class="btn out" href={`tel:${settings.phone}`}>📞 Call or Text</a>
+      </div>
+      <div class="trust">
+        <span><i class="ic" aria-hidden="true">🛡</i>Professional Equipment</span>
+        <span><i class="ic" aria-hidden="true">📍</i>We Come To You</span>
+        <span><i class="ic" aria-hidden="true">☆</i>100% Satisfaction</span>
+      </div>
+    </div>
+  </div>
+</div>
