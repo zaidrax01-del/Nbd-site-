@@ -1,1 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import settings from '../data/settings.json';
 
+const main = (await getCollection('services'))
+  .filter((s) => s.data.category === 'main')
+  .sort((a, b) => a.data.weight - b.data.weight);
+
+// Top three become plan cards, rest go in the table on Services
+const plans = main.slice(0, 3);
+const popular = 1; // index of the "Most Popular" plan
+---
+
+<section id="pricing">
+  <div class="wrap sec">
+    <div class="lab">Our Packages</div>
+    <h2 class="serif">Simple &amp; Transparent Pricing</h2>
+    <p class="sub">
+      Choose the package that fits your ride. Not sure? Text us a photo and we'll tell you
+      what it needs.
+    </p>
+
+    <div class="price">
+      {plans.map((p, i) => (
+        <div class={`plan${i === popular ? ' hot' : ''}`}>
+          {i === popular && <span class="mp">Most Popular</span>}
+          <h3>{p.data.title}</h3>
+          <div class="amt">{p.data.price}<small>+</small></div>
+          <ul>
+            {p.data.description.split('. ').slice(0, 5).map((line) => (
+              <li>{line.replace(/\.$/, '')}</li>
+            ))}
+          </ul>
+          <a class={i === popular ? 'btn fill' : 'btn out'} href="#book">Book Now</a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
