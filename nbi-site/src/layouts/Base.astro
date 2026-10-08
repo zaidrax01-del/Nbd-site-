@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import settings from '../data/settings.json';
+import Cinematic from '../components/Cinematic.astro';
 
 interface Props {
   title?: string;
@@ -65,8 +66,40 @@ const jsonLd = {
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap"
     rel="stylesheet"
   >
+
+  <!-- Intro curtain lock — runs before paint so there's no flash -->
+  <script is:inline>
+    (function(){
+      var d = document.documentElement;
+      if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+        d.classList.add('lock');
+        setTimeout(function(){
+          d.classList.remove('lock');
+          var i = document.getElementById('intro');
+          if (i && i.parentNode) i.parentNode.removeChild(i);
+          if (document.body) document.body.classList.add('ready');
+        }, 7500);
+      }
+    })();
+  </script>
 </head>
 <body>
+
+  <!-- ============ INTRO CURTAIN ============ -->
+  <div id="intro" aria-hidden="true">
+    <div class="half top"></div><div class="half bot"></div>
+    <div class="laser"></div>
+    <div class="core">
+      <svg viewBox="0 0 60 50">
+        <path pathLength="1" d="M4 12l14 12L30 4l12 20L56 12l-6 28H10z"/>
+        <rect pathLength="1" x="12" y="43" width="36" height="5" rx="2"/>
+      </svg>
+      <div class="word">NOTHING BUT DETAILING</div>
+      <div class="pbar"><i></i></div>
+    </div>
+  </div>
+  <div id="prog" aria-hidden="true"></div>
+
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
     <defs>
       <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
@@ -83,5 +116,7 @@ const jsonLd = {
   <slot />
 
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <Cinematic />
 </body>
 </html>
