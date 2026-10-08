@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /admin/
-
-Sitemap: https://nbd-detail.com/sitemap-index.xml
