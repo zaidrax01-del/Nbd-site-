@@ -1,1 +1,70 @@
+---
+import { getCollection } from 'astro:content';
 
+const services = (await getCollection('services'))
+  .filter((s) => s.data.category === 'main')
+  .sort((a, b) => a.data.weight - b.data.weight);
+
+const featured = services.filter((s) => s.data.featured);
+const all = (await getCollection('services')).sort((a, b) => a.data.weight - b.data.weight);
+const addons = all.filter((s) => s.data.category === 'addon');
+---
+
+<section id="services">
+  <div class="wrap sec">
+    <div class="svc">
+      <div>
+        <div class="lab">Our Services</div>
+        <h2 class="serif">Professional Detailing<span class="pk">Inside &amp; Out</span></h2>
+        <p class="sub">
+          From a quick maintenance wash to a full paint correction and ceramic coating —
+          every job is done by hand, on site, with professional-grade products.
+        </p>
+
+        <div class="cards">
+          {featured.map((s) => (
+            <div class="card">
+              <i class="ic" aria-hidden="true">{s.data.icon}</i>
+              <h3>{s.data.title}</h3>
+              <p>{s.data.description}</p>
+              <span class="from">from {s.data.price}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <table class="ptable">
+          <caption>Full service menu</caption>
+          <thead>
+            <tr>
+              <th scope="col">Service</th>
+              <th scope="col">Details</th>
+              <th scope="col">From</th>
+            </tr>
+          </thead>
+          <tbody>
+            {services.map((s) => (
+              <tr>
+                <td>{s.data.title}</td>
+                <td><small>{s.data.description}</small></td>
+                <td>{s.data.price}</td>
+              </tr>
+            ))}
+            {addons.map((s) => (
+              <tr class="addon">
+                <td>{s.data.title}</td>
+                <td><small>{s.data.description}</small></td>
+                <td>{s.data.price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="note">
+          Prices are starting points. Oversized vehicles, heavy soiling and pet hair may
+          add to the final quote — you'll always get a price before we start.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
