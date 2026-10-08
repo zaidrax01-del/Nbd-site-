@@ -1,1 +1,24 @@
+---
+import { getCollection } from 'astro:content';
 
+const questions = (await getCollection('faq')).sort(
+  (a, b) => a.data.weight - b.data.weight
+);
+---
+
+<section id="faq">
+  <div class="wrap sec">
+    <div class="lab">FAQ</div>
+    <h2 class="serif">Questions, Answered</h2>
+    <p class="sub" style="margin-bottom:26px">
+      Still not sure? Call or text — we're happy to talk it through.
+    </p>
+
+    {questions.map((q) => (
+      <details>
+        <summary>{q.data.question}</summary>
+        <p><slot />{q.body}</p>
+      </details>
+    ))}
+  </div>
+</section>
