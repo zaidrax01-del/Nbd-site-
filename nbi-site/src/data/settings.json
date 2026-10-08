@@ -1,0 +1,36 @@
+{
+  "businessName": "NBD",
+  "fullName": "Nothing But Detailing",
+  "tagline": "Premium Car Detailing. We Come To You.",
+  "phone": "+17755550123",
+  "phoneDisplay": "(775) 555-0123",
+  "email": "hello@nbd-detail.com",
+  "bookingUrl": "https://calendly.com/your-booking-link",
+  "heroDescription": "Your car deserves more than a wash. NBD brings professional-grade detailing straight to your driveway, office or apartment — leaving your ride cleaner, fresher and looking brand new.",
+  "shortDescription": "Nothing But Detailing. Mobile car detailing serving Reno, Sparks, Carson City and surrounding Northern Nevada.",
+  "aboutParagraphs": [
+    "NBD — Nothing But Detailing — is a locally owned mobile detailing service based in Reno, Nevada. We started NBD because getting a proper detail shouldn't mean losing your car for a day or sitting in a waiting room.",
+    "We come to you. Home, office, apartment complex, dealership lot — as long as we've got water and power access, we'll set up and get to work.",
+    "Every vehicle gets the same treatment: professional-grade products, careful hand work, and a final walkthrough with you before we pack up. No spots. No shortcuts. Nothing but detailing."
+  ],
+  "hours": [
+    { "label": "Monday – Friday", "value": "8:00 AM – 6:00 PM", "closed": false },
+    { "label": "Saturday", "value": "9:00 AM – 4:00 PM", "closed": false },
+    { "label": "Sunday", "value": "Closed", "closed": true }
+  ],
+  "areas": [
+    "Reno",
+    "Sparks",
+    "Carson City",
+    "Spanish Springs",
+    "Sun Valley & Lemmon Valley",
+    "Minden & Gardnerville",
+    "Surrounding areas (travel fee may apply)"
+  ],
+  "socials": {
+    "instagram": "https://instagram.com/YOURHANDLE",
+    "tiktok": "https://tiktok.com/@YOURHANDLE",
+    "facebook": "https://facebook.com/YOURPAGE",
+    "google": "https://g.page/YOURGOOGLEPROFILE"
+  }
+}
