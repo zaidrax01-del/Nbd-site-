@@ -10,7 +10,6 @@ display_url: https://nbd-detail.com
 logo_url: https://nbd-detail.com/favicon.svg
 
 collections:
-  # ---------- SITE SETTINGS ----------
   - name: settings
     label: "Site Settings"
     files:
@@ -20,7 +19,7 @@ collections:
         fields:
           - { label: "Business Name", name: "businessName", widget: "string", default: "NBD" }
           - { label: "Full Name", name: "fullName", widget: "string", default: "Nothing But Detailing" }
-          - { label: "Tagline", name: "tagline", widget: "string", default: "Premium Car Detailing. We Come To You." }
+          - { label: "Tagline", name: "tagline", widget: "string" }
           - { label: "Phone (link format)", name: "phone", widget: "string", hint: "e.g. +17755550123 — no spaces" }
           - { label: "Phone (display)", name: "phoneDisplay", widget: "string", hint: "e.g. (775) 555-0123" }
           - { label: "Email", name: "email", widget: "string" }
@@ -46,7 +45,6 @@ collections:
               - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
               - { label: "Google Business URL", name: "google", widget: "string", required: false }
 
-  # ---------- SERVICES ----------
   - name: services
     label: "Services"
     label_singular: "Service"
@@ -62,11 +60,27 @@ collections:
       - { label: "Starting Price", name: "price", widget: "string", hint: "e.g. $100 or $100+" }
       - { label: "Icon (emoji)", name: "icon", widget: "string", default: "✨" }
       - { label: "Category", name: "category", widget: "select", options: ["main", "addon"], default: "main" }
-      - { label: "Display Order", name: "weight", widget: "number", default: 100, hint: "Lower numbers show first" }
+      - { label: "Display Order", name: "weight", widget: "number", default: 100 }
       - { label: "Featured (show as card)", name: "featured", widget: "boolean", default: false }
       - { label: "Body (optional)", name: "body", widget: "markdown", required: false }
 
-  # ---------- GALLERY ----------
+  - name: beforeafter
+    label: "Before & After"
+    label_singular: "Pair"
+    folder: "src/content/beforeafter"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    sortable_fields: ["weight", "caption"]
+    fields:
+      - { label: "Before Image", name: "beforeImage", widget: "image" }
+      - { label: "After Image", name: "afterImage", widget: "image" }
+      - { label: "Caption", name: "caption", widget: "string" }
+      - { label: "Vehicle", name: "vehicle", widget: "string", required: false }
+      - { label: "Display Order", name: "weight", widget: "number", default: 100 }
+      - { label: "Feature on homepage", name: "featured", widget: "boolean", default: false }
+
   - name: gallery
     label: "Gallery"
     label_singular: "Photo"
@@ -79,12 +93,10 @@ collections:
     fields:
       - { label: "Image", name: "image", widget: "image" }
       - { label: "Caption", name: "caption", widget: "string" }
-      - { label: "Category", name: "category", widget: "select", options: ["before", "after", "interior", "exterior", "wheels", "engine", "other"], default: "other" }
+      - { label: "Category", name: "category", widget: "select", options: ["interior", "exterior", "wheels", "engine", "other"], default: "other" }
       - { label: "Display Order", name: "weight", widget: "number", default: 100 }
       - { label: "Feature on homepage", name: "featured", widget: "boolean", default: false }
-      - { label: "Notes (internal)", name: "body", widget: "markdown", required: false }
 
-  # ---------- REVIEWS ----------
   - name: reviews
     label: "Reviews"
     label_singular: "Review"
@@ -96,12 +108,11 @@ collections:
     sortable_fields: ["weight", "name"]
     fields:
       - { label: "Customer Name", name: "name", widget: "string" }
-      - { label: "Location", name: "location", widget: "string", hint: "e.g. Reno, NV" }
+      - { label: "Location", name: "location", widget: "string" }
       - { label: "Rating", name: "rating", widget: "number", min: 1, max: 5, default: 5 }
       - { label: "Display Order", name: "weight", widget: "number", default: 100 }
       - { label: "Quote", name: "body", widget: "markdown" }
 
-  # ---------- FAQ ----------
   - name: faq
     label: "FAQ"
     label_singular: "Question"
