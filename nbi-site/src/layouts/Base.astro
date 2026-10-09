@@ -9,7 +9,7 @@ interface Props {
 }
 
 const {
-  title = `${settings.fullName} | Mobile Car Detailing in Reno & Sparks`,
+  title = `${settings.fullName} | Mobile Car Detailing in Burbank`,
   description = settings.heroDescription,
 } = Astro.props;
 
@@ -26,8 +26,8 @@ const jsonLd = {
   priceRange: '$$',
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Reno',
-    addressRegion: 'NV',
+    addressLocality: 'Burbank',
+    addressRegion: 'CA',
     addressCountry: 'US',
   },
   areaServed: settings.areas.map((name) => ({ '@type': 'City', name })),
