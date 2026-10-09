@@ -1,15 +1,17 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: zaidrax01-del/Nbd-site-
   branch: main
 
 media_folder: "public/photos"
 public_folder: "/photos"
 
-site_url: https://nbd-detail.com
-display_url: https://nbd-detail.com
-logo_url: https://nbd-detail.com/favicon.svg
+site_url: https://nbdaa.netlify.app
+display_url: https://nbdaa.netlify.app
+logo_url: https://nbdaa.netlify.app/favicon.svg
 
 collections:
+  # ---------- SITE SETTINGS ----------
   - name: settings
     label: "Site Settings"
     files:
@@ -20,8 +22,8 @@ collections:
           - { label: "Business Name", name: "businessName", widget: "string", default: "NBD" }
           - { label: "Full Name", name: "fullName", widget: "string", default: "Nothing But Detailing" }
           - { label: "Tagline", name: "tagline", widget: "string" }
-          - { label: "Phone (link format)", name: "phone", widget: "string", hint: "e.g. +17755550123 — no spaces" }
-          - { label: "Phone (display)", name: "phoneDisplay", widget: "string", hint: "e.g. (775) 555-0123" }
+          - { label: "Phone (link format)", name: "phone", widget: "string", hint: "e.g. +18188532288 — no spaces" }
+          - { label: "Phone (display)", name: "phoneDisplay", widget: "string", hint: "e.g. (818) 853-2288" }
           - { label: "Email", name: "email", widget: "string" }
           - { label: "Booking URL", name: "bookingUrl", widget: "string", required: false }
           - { label: "Hero Description", name: "heroDescription", widget: "text" }
@@ -45,6 +47,7 @@ collections:
               - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
               - { label: "Google Business URL", name: "google", widget: "string", required: false }
 
+  # ---------- SERVICES ----------
   - name: services
     label: "Services"
     label_singular: "Service"
@@ -60,10 +63,11 @@ collections:
       - { label: "Starting Price", name: "price", widget: "string", hint: "e.g. $100 or $100+" }
       - { label: "Icon (emoji)", name: "icon", widget: "string", default: "✨" }
       - { label: "Category", name: "category", widget: "select", options: ["main", "addon"], default: "main" }
-      - { label: "Display Order", name: "weight", widget: "number", default: 100 }
+      - { label: "Display Order", name: "weight", widget: "number", default: 100, hint: "Lower numbers show first" }
       - { label: "Featured (show as card)", name: "featured", widget: "boolean", default: false }
       - { label: "Body (optional)", name: "body", widget: "markdown", required: false }
 
+  # ---------- BEFORE & AFTER ----------
   - name: beforeafter
     label: "Before & After"
     label_singular: "Pair"
@@ -76,11 +80,12 @@ collections:
     fields:
       - { label: "Before Image", name: "beforeImage", widget: "image" }
       - { label: "After Image", name: "afterImage", widget: "image" }
-      - { label: "Caption", name: "caption", widget: "string" }
+      - { label: "Caption", name: "caption", widget: "string", hint: "e.g. Driver's seat, 2019 Tacoma" }
       - { label: "Vehicle", name: "vehicle", widget: "string", required: false }
       - { label: "Display Order", name: "weight", widget: "number", default: 100 }
       - { label: "Feature on homepage", name: "featured", widget: "boolean", default: false }
 
+  # ---------- GALLERY ----------
   - name: gallery
     label: "Gallery"
     label_singular: "Photo"
@@ -97,6 +102,7 @@ collections:
       - { label: "Display Order", name: "weight", widget: "number", default: 100 }
       - { label: "Feature on homepage", name: "featured", widget: "boolean", default: false }
 
+  # ---------- REVIEWS ----------
   - name: reviews
     label: "Reviews"
     label_singular: "Review"
@@ -108,11 +114,12 @@ collections:
     sortable_fields: ["weight", "name"]
     fields:
       - { label: "Customer Name", name: "name", widget: "string" }
-      - { label: "Location", name: "location", widget: "string" }
+      - { label: "Location", name: "location", widget: "string", hint: "e.g. Burbank, CA" }
       - { label: "Rating", name: "rating", widget: "number", min: 1, max: 5, default: 5 }
       - { label: "Display Order", name: "weight", widget: "number", default: 100 }
       - { label: "Quote", name: "body", widget: "markdown" }
 
+  # ---------- FAQ ----------
   - name: faq
     label: "FAQ"
     label_singular: "Question"
